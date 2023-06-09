@@ -11,6 +11,7 @@ namespace Lab7.AppDbContext
             Configuration = configuration;
         }
         public DbSet<Account> Account { get; set; }
+        public DbSet<Product> Product { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(Configuration.GetConnectionString("Default"));

@@ -1,0 +1,25 @@
+﻿@using LAb7FE.Controllers
+@model Product
+<form asp-action="Create">
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">Name</label>
+        <input asp-for="Name" id="form2Example1" class="form-control" />        
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">Count</label>
+        <input asp-for="Count" type="number" id="form2Example1" class="form-control" />
+    </div>
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">EndDate</label>
+        <input asp-for="EndDate" type="datetime" id="form2Example1" class="form-control" />
+    </div>
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example1">Description</label>
+        <input asp-for="Description" id="form2Example1" class="form-control" />
+    </div>
+    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
+</form>
