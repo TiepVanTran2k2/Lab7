@@ -7,6 +7,7 @@ namespace Lab7.Controllers
         public ProfileMapper()
         {
             CreateMap<Account, UserDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
         }
     }
 }

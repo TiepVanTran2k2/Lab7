@@ -10,6 +10,13 @@ namespace LAb7FE.Controllers
         public string Description { get; set; }
         public DateTime EndDate { get; set; }
     }
+    public class ProductDto
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
+        public string Description { get; set; }
+        public DateTime EndDate { get; set; }
+    }
     public class Helper
     {
         public List<string> GetListNameFieldAsync<TEntity>()
