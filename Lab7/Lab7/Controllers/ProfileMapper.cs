@@ -8,6 +8,7 @@ namespace Lab7.Controllers
         {
             CreateMap<Account, UserDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ModelProductUpdate>().ReverseMap();
         }
     }
 }
