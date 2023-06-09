@@ -41,8 +41,10 @@ namespace LAb7FE.Controllers
             }
             return View();
         }
-        [HttpPost]
         public async Task<IActionResult> Update()
+        {
+            return View();
+        }
         public async Task<HttpResponseMessage> FetchAsync(string baseUrl, string operation, string payload, string method, string authorization = "")
         {
             HttpResponseMessage response = null;
