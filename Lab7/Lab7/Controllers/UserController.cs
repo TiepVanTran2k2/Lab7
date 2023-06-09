@@ -1,4 +1,5 @@
-﻿using Lab7.AppDbContext;
+﻿using AutoMapper;
+using Lab7.AppDbContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,10 +15,12 @@ namespace Lab7.Controllers
     {
         private readonly IConfiguration _config;
         private readonly DbContextApp _dbContext;
-        public UserController(IConfiguration config, DbContextApp dbContextApp)
+        private readonly IMapper _iMapper;
+        public UserController(IConfiguration config, DbContextApp dbContextApp, IMapper mapper)
         {
             _config = config;
             _dbContext = dbContextApp;
+            _iMapper = mapper;
         }
         [HttpPost]
         public async Task<object> Login(UserDto input)
@@ -30,6 +33,14 @@ namespace Lab7.Controllers
                 throw new Exception("Account not found");
             }
             return GenerateToken(user);
+        }
+        [HttpPost("Register")]
+        public async Task<bool> Register(UserDto input)
+        {
+            var user = _iMapper.Map<Account>(input);
+            _dbContext.Account.Add(user);
+            _dbContext.SaveChanges();
+            return true;
         }
         private object GenerateToken(Account account)
         {

@@ -3,17 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text;
 using Newtonsoft.Json;
+using System.Xml.Linq;
+
 namespace LAb7FE.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IHttpClientFactory _iHttpClientFactory;
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory iHttpClientFactory)
+        private IHttpContextAccessor _iAccessor;
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory iHttpClientFactory, IHttpContextAccessor iAccessor)
         {
             _logger = logger;
             _iHttpClientFactory = iHttpClientFactory;
+            _iAccessor = iAccessor;
         }
 
         public IActionResult Index()
@@ -32,8 +35,29 @@ namespace LAb7FE.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsStringAsync();
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddDays(30);
+
+                //Create a Cookie with a suitable Key and add the Cookie to Browser.
+                Response.Cookies.Append("Authorize", data, option);
+                return RedirectToAction("Index");
             }
             return null;
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserDto userDto)
+        {
+            var payload = JsonConvert.SerializeObject(userDto);
+            var response = await FetchAsync("https://localhost:7269/api/User/Register", string.Empty, payload, "POST");
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
         }
         public IActionResult Privacy()
         {
